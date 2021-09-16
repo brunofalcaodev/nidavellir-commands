@@ -1,0 +1,47 @@
+{
+    "name": "brunofalcaodev/nidavellir-commands",
+    "description": "Nidavellir Commands",
+    "keywords": [
+        "brunocfalcao"
+    ],
+    "homepage": "https://github.com/brunofalcaodev/nidavellir-commands",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Bruno Falcão",
+            "email": "bruno.c.falcao@brunofalcao.me",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4|^8.0",
+        "illuminate/support": "^8.0",
+        "brunofalcaodev/nidavellir-cube": "dev-master",
+        "brunofalcaodev/nidavellir-abstracts": "dev-master",
+        "brunofalcaodev/nidavellir-kucoin": "dev-master",
+        "brunofalcaodev/nidavellir-coingecko": "dev-master",
+        "brunofalcaodev/nidavellir-installer": "dev-master",
+        "brunofalcaodev/nidavellir-commands": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Nidavellir\\Commands\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Nidavellir\\Commands\\NidavellirCommandsServiceProvider"
+            ]
+        }
+    }
+}
