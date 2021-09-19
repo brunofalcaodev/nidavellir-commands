@@ -3,7 +3,7 @@
 namespace Nidavellir\Commands\Commands;
 
 use Illuminate\Console\Command;
-use Nidavellir\Cube\Models\Token;
+use Nidavellir\Cube\Models\Ticker;
 use Nidavellir\Workflows\Jobs\ProcessAlert;
 
 class WebhookTest extends Command
