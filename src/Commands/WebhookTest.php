@@ -4,6 +4,7 @@ namespace Nidavellir\Commands\Commands;
 
 use Illuminate\Console\Command;
 use Nidavellir\Cube\Models\Token;
+use Nidavellir\Workflows\Jobs\ProcessAlert;
 
 class WebhookTest extends Command
 {
@@ -12,7 +13,7 @@ class WebhookTest extends Command
      *
      * @var string
      */
-    protected $signature = 'nidavellir:webhook';
+    protected $signature = 'nidavellir:test';
 
     /**
      * The console command description.
@@ -28,18 +29,6 @@ class WebhookTest extends Command
      */
     public function __construct()
     {
-        /**
-         * api:A4FC12
-         * action:buy
-         * token:MASK
-         * amount:4500
-         * ticker:{{ticker}}
-         * price:{{close}}.
-         */
-        $array = [
-            'api:A4FC12',
-            'action:buy', ];
-
         parent::__construct();
     }
 
@@ -50,6 +39,41 @@ class WebhookTest extends Command
      */
     public function handle()
     {
+        /**
+         * api:A4FC12
+         * action:buy
+         * token:MASK
+         * amount:4500
+         * ticker:{{ticker}}
+         * price:{{close}}.
+         */
+        $body = 'api:6145ac1eb8b9a
+action:buy
+amount:45a00
+ticker:{{ticker}}
+price:{{close}}';
+
+        $headers = ['key1' => 'value1'];
+
+        ProcessAlert::dispatch($headers, $body);
+
+        return;
+
+        $array = [
+            'api:A4FC12',
+            'action:buy',
+            'ticker:{{ticker}}',
+            'amount:4500',
+            'price:{{close}}-0.5%', ];
+
+        $collection = collect($array)->map(function ($item, $key) {
+            $values = explode(':', str_replace(' ', '', $item));
+
+            return [$values[0] => $values[1]];
+        });
+
+        $collection->collapse()->dump();
+
         return 0;
     }
 }
