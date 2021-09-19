@@ -42,7 +42,7 @@ class WebhookTest extends Command
         /**
          * api:A4FC12
          * action:buy
-         * token:MASK
+         * ticker:MASK
          * amount:4500
          * ticker:{{ticker}}
          * price:{{close}}.
