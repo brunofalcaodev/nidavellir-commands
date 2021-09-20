@@ -3,7 +3,7 @@
 namespace Nidavellir\Commands\Commands;
 
 use Illuminate\Console\Command;
-use Nidavellir\Cube\Models\Ticker;
+use Nidavellir\Cube\Models\Token;
 use Nidavellir\Jobs\Jobs\Alerts\ProcessAlert;
 
 class WebhookTest extends Command
@@ -42,15 +42,15 @@ class WebhookTest extends Command
         /**
          * api:A4FC12
          * action:buy
-         * ticker:MASK
+         * token:MASK
          * amount:4500
-         * ticker:{{ticker}}
+         * token:{{token}}
          * price:{{close}}.
          */
         $body = 'api:6145ac1eb8b9a
 action:buy
 amount:45a00
-ticker:{{ticker}}
+token:{{token}}
 price:{{close}}';
 
         $headers = ['key1' => 'value1'];
@@ -62,7 +62,7 @@ price:{{close}}';
         $array = [
             'api:A4FC12',
             'action:buy',
-            'ticker:{{ticker}}',
+            'token:{{token}}',
             'amount:4500',
             'price:{{close}}-0.5%', ];
 

@@ -3,24 +3,25 @@
 namespace Nidavellir\Commands\Commands\Kucoin;
 
 use Illuminate\Console\Command;
+use Nidavellir\Apis\Kucoin;
 use Nidavellir\Cube\Models\Api;
-use Nidavellir\Kucoin\KucoinCrawler;
+use Nidavellir\Cube\Models\Token;
 
-class UpdateTickers extends Command
+class UpdateTokens extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'kucoin:update-tickers';
+    protected $signature = 'kucoin:update-tokens';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = '( https://docs.kucoin.com/#get-all-tickers )';
+    protected $description = '( https://docs.kucoin.com/#get-all-tokens )';
 
     /**
      * Create a new command instance.
@@ -39,20 +40,29 @@ class UpdateTickers extends Command
      */
     public function handle()
     {
-        $this->info('Updating all Kucoin tickers...');
+        $this->info('Updating all Kucoin tokens...');
 
-        $data = KucoinCrawler::withApi(Api::firstWhere('id', 1))
-                                 ->allTickers();
+        $data = Kucoin::asSystem()
+                      ->allTokens();
+
+        // Update all tokens.
+        dd($data);
 
         /**
          * From here, there is a lot of things to do.
-         * 1. If the canonical doesn't exist, add it to the tickers table.
+         * 1. If the canonical doesn't exist, add it to the tokens table.
          * 2. If the quote doesn't exist, add it to the quotes table.
-         * 3. If the pair (ticker-quote) doesn't exist, add it to the pairs table.
+         * 3. If the pair (token-quote) doesn't exist, add it to the pairs table.
          * 4. Update all information on the pair given the latest data.
          */
-        foreach ($data->response()['ticker'] as $ticker) {
-            dd($ticker);
+        foreach ($data->response()['token'] as $token) {
+            Token::updateOrCreate(
+                ['coingecko_id' => $token['id']],
+                ['name'         => $token['name'],
+                    'canonical'    => $token['symbol'],
+                    'coingecko_id' => $token['id'],
+                ]
+            );
         }
 
         dd($data->response());
@@ -68,8 +78,8 @@ class UpdateTickers extends Command
         $api = new Symbol($auth);
 
         try {
-            $result = $api->getAllTickers();
-            var_dump($result['ticker'][0]);
+            $result = $api->getAllTokens();
+            var_dump($result['token'][0]);
         } catch (HttpException $e) {
             var_dump($e->getMessage());
         } catch (BusinessException $e) {
