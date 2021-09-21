@@ -3,7 +3,7 @@
 namespace Nidavellir\Commands\Commands\Coingecko;
 
 use Illuminate\Console\Command;
-use Nidavellir\Jobs\Jobs\Coingecko\RefreshTokensCanonicals as TokensJob;
+use Nidavellir\Jobs\Coingecko\RefreshTokensCanonicals as TokensJob;
 
 class RefreshTokensCanonicals extends Command
 {

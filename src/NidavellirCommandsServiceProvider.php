@@ -6,7 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Nidavellir\Commands\Commands\Alerts\TriggerAlert;
 use Nidavellir\Commands\Commands\Coingecko\RefreshTokensCanonicals as CoingeckoRefreshTokensCanonicals;
 use Nidavellir\Commands\Commands\Coingecko\RefreshTokensUrls as CoingeckoRefreshTokensUrls;
-use Nidavellir\Commands\Commands\Kucoin\UpdateTokens;
+use Nidavellir\Commands\Commands\Kucoin\UpdateAllTokens;
 use Nidavellir\Commands\Commands\WebhookTest;
 
 class NidavellirCommandsServiceProvider extends ServiceProvider
@@ -22,8 +22,8 @@ class NidavellirCommandsServiceProvider extends ServiceProvider
             WebhookTest::class,
             CoingeckoRefreshTokensCanonicals::class,
             CoingeckoRefreshTokensUrls::class,
-            UpdateTokens::class,
-            TriggerAlert::class
+            UpdateAllTokens::class,
+            TriggerAlert::class,
         ]);
     }
 

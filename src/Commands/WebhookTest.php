@@ -4,7 +4,7 @@ namespace Nidavellir\Commands\Commands;
 
 use Illuminate\Console\Command;
 use Nidavellir\Cube\Models\Token;
-use Nidavellir\Jobs\Jobs\Alerts\ProcessAlert;
+use Nidavellir\Jobs\Alerts\ProcessAlert;
 
 class WebhookTest extends Command
 {

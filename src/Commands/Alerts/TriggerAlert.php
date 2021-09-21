@@ -3,9 +3,10 @@
 namespace Nidavellir\Commands\Commands\Alerts;
 
 use Illuminate\Console\Command;
-use Nidavellir\Apis\Kucoin;
 use Nidavellir\Cube\Models\Api;
 use Nidavellir\Cube\Models\Token;
+use Nidavellir\Pipelines\Pipeline;
+use Nidavellir\Pipelines\ProcessAlert\ProcessAlert;
 
 class TriggerAlert extends Command
 {
@@ -46,20 +47,19 @@ class TriggerAlert extends Command
          * amount:<4500 | min 4500 | max 4500 | 25% | max 25% | min 25%>
          * token:{{ticker}}
          * type:<market | limit>
-         * limit:<+1% | -1%>
+         * limit:<+1% | -1%>.
          */
-
         $hashcode = Api::firstWhere('id', rand(1, 50))->hashcode;
 
         $body = "api:{$hashcode}
 action:buy
 amount:4500
-token:{{ticker}}
-type:market";
+token:ADAUSDT
+price:market";
 
         Pipeline::set('headers', [])
                 ->set('body', $body)
-                ->onPipeline(ProcessAlertPipeline::class)
+                ->onPipeline(ProcessAlert::class)
                 ->execute();
 
         return 0;
