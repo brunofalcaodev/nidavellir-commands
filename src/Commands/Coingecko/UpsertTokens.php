@@ -3,23 +3,23 @@
 namespace Nidavellir\Commands\Commands\Coingecko;
 
 use Illuminate\Console\Command;
-use Nidavellir\Jobs\Coingecko\RefreshTokensUrls as TokensJob;
+use Nidavellir\Jobs\Coingecko\UpsertTokensJob;
 
-class RefreshTokensUrls extends Command
+class UpsertTokens extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'coingecko:refresh-tokens-urls';
+    protected $signature = 'coingecko:upsert-tokens';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Refreshs tokens urls until a maximum of 250';
+    protected $description = 'Refreshs tokens urls';
 
     /**
      * Create a new command instance.
@@ -38,11 +38,7 @@ class RefreshTokensUrls extends Command
      */
     public function handle()
     {
-        $this->info('Refreshing tokens urls...');
-
-        TokensJob::dispatch();
-
-        $this->info('Done.');
+        UpsertTokensJob::dispatch();
 
         return 0;
     }

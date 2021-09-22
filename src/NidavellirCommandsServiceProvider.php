@@ -4,9 +4,8 @@ namespace Nidavellir\Commands;
 
 use Illuminate\Support\ServiceProvider;
 use Nidavellir\Commands\Commands\Alerts\TriggerAlert;
-use Nidavellir\Commands\Commands\Coingecko\RefreshTokensCanonicals as CoingeckoRefreshTokensCanonicals;
-use Nidavellir\Commands\Commands\Coingecko\RefreshTokensUrls as CoingeckoRefreshTokensUrls;
-use Nidavellir\Commands\Commands\Kucoin\UpdateAllTokens;
+use Nidavellir\Commands\Commands\Coingecko\UpsertTokens as UpsertTokensCoingecko;
+use Nidavellir\Commands\Commands\Kucoin\UpsertTokens as UpsertTokensKucoin;
 use Nidavellir\Commands\Commands\WebhookTest;
 
 class NidavellirCommandsServiceProvider extends ServiceProvider
@@ -20,9 +19,8 @@ class NidavellirCommandsServiceProvider extends ServiceProvider
     {
         $this->commands([
             WebhookTest::class,
-            CoingeckoRefreshTokensCanonicals::class,
-            CoingeckoRefreshTokensUrls::class,
-            UpdateAllTokens::class,
+            UpsertTokensKucoin::class,
+            UpsertTokensCoingecko::class,
             TriggerAlert::class,
         ]);
     }
