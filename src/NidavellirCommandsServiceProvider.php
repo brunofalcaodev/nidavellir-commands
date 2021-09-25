@@ -6,7 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Nidavellir\Commands\Commands\Alerts\TriggerAlert;
 use Nidavellir\Commands\Commands\Coingecko\UpsertTokens as UpsertTokensCoingecko;
 use Nidavellir\Commands\Commands\Kucoin\UpsertTokens as UpsertTokensKucoin;
-use Nidavellir\Commands\Commands\WebhookTest;
+use Nidavellir\Commands\Commands\Tests\WebhookSuccess;
 
 class NidavellirCommandsServiceProvider extends ServiceProvider
 {
@@ -18,7 +18,7 @@ class NidavellirCommandsServiceProvider extends ServiceProvider
     protected function registerCommands(): void
     {
         $this->commands([
-            WebhookTest::class,
+            WebhookSuccess::class,
             UpsertTokensKucoin::class,
             UpsertTokensCoingecko::class,
             TriggerAlert::class,

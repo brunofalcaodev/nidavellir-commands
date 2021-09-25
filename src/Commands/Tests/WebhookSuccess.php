@@ -1,19 +1,21 @@
 <?php
 
-namespace Nidavellir\Commands\Commands;
+namespace Nidavellir\Commands\Commands\Tests;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Http;
+use Nidavellir\Cube\Models\Api;
 use Nidavellir\Cube\Models\Token;
 use Nidavellir\Jobs\Alerts\ProcessAlert;
 
-class WebhookTest extends Command
+class WebhookSuccess extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'nidavellir:test';
+    protected $signature = 'nidavellir:webhook';
 
     /**
      * The console command description.
@@ -47,15 +49,27 @@ class WebhookTest extends Command
          * token:{{token}}
          * price:{{close}}.
          */
-        $body = 'api:6145ac1eb8b9a
+
+        // Get a random api.
+        $api = Api::inRandomOrder()->take(1)->first();
+
+        $body = "api:{$api->hashcode}
 action:buy
-amount:45a00
+amount:4500
 token:{{token}}
-price:{{close}}';
+price:{{close}}";
 
         $headers = ['key1' => 'value1'];
 
-        ProcessAlert::dispatch($headers, $body);
+        ProcessAlert::dispatchSync(null, $headers, $body);
+
+        Http::withBody('api:6145ac1eb8b9a
+action:buy
+amount:45a00
+token:{{token}}
+price:{{close}}', 'text/plain')->post('http://localhost:8000/webhook');
+
+        //ProcessAlert::dispatch($headers, $body);
 
         return;
 
