@@ -44,30 +44,26 @@ class WebhookSuccess extends Command
         /**
          * api:A4FC12
          * action:buy
-         * token:MASK
+         * token:MASKUSDT
          * amount:4500
          * token:{{token}}
-         * price:{{close}}.
+         * type:market.
          */
 
-        // Get a random api.
+        // Get a random api, so it works.
         $api = Api::inRandomOrder()->take(1)->first();
 
         $body = "api:{$api->hashcode}
 action:buy
-amount:4500
-token:{{token}}
-price:{{close}}";
+amount:50
+token:ADAUSDT
+type:market";
 
         $headers = ['key1' => 'value1'];
 
-        ProcessAlert::dispatchSync(null, $headers, $body);
+        //ProcessAlert::dispatchSync(null, $headers, $body);
 
-        Http::withBody('api:6145ac1eb8b9a
-action:buy
-amount:45a00
-token:{{token}}
-price:{{close}}', 'text/plain')->post('http://localhost:8000/webhook');
+        Http::withBody($body, 'text/plain')->post('http://localhost:8000/webhook');
 
         //ProcessAlert::dispatch($headers, $body);
 
